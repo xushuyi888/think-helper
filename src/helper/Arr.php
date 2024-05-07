@@ -303,7 +303,11 @@ class Arr
 
         foreach (explode('.', $key) as $segment) {
             if (static::accessible($array) && static::exists($array, $segment)) {
-                $array = $array[$segment];
+                if (is_object($array[$segment])) {
+                    $array = (array) $array[$segment];
+                } else {
+                    $array = $array[$segment];
+                }
             } else {
                 return value($default);
             }
